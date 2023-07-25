@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Product } from 'src/app/interfaces/products-response.interface';
 

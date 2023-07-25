@@ -18,25 +18,24 @@ export class ApiService {
   private headers = new HttpHeaders()
     .set( 'authorId', this.authorId );
 
-  private products: Product[] = [];
-
   constructor() {}
 
-  get Products() {
-    return this.products;
-  }
 
   getProducts (): Observable<Product[]> {
     const url = `${this.baseUrl}/bp/products`;
     return this.http.get<Product[]>(url, { headers: this.headers })
       .pipe(
-        tap(products => this.products = products),
+        tap(),
         catchError(err => throwError(() => err.error.message))
       )
   }
 
-  saveProduct() {
-    
+  saveProduct( body:Product ) {
+    const url = `${this.baseUrl}/bp/products`;    
+    return this.http.post(url, body, { headers: this.headers })
+      .pipe(
+        catchError(err => throwError(() => err.error.message))
+      )
   }
 
   updateProduct() {

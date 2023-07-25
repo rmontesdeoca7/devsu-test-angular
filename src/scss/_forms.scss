@@ -1,3 +1,5 @@
+@import 'variables';
+
 label {
   display: block;
   font-weight: bold;
@@ -16,5 +18,24 @@ input {
   border: 1px solid #DBDBDC;
   border-radius: 4px;
   padding: 12px;
+  color: $blue500;
+}
 
+input:-moz-read-only,
+input:readonly,
+input[readonly],
+textarea:-moz-read-only,
+input:read-only,
+textarea:read-only {
+  color: $blue300;
+  cursor: not-allowed;
+}
+input.disabled {
+  color: $blue400;
+  pointer-events: none;
+}
+
+.error-label {
+  font-size: .7rem;
+  color: red;
 }

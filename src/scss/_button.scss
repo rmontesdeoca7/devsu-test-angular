@@ -45,3 +45,13 @@
     opacity: 0.7;
   }
 }
+
+.btn-primary:disabled,
+.btn-primary[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.dots {
+  transform: rotate(90deg);
+}

@@ -6,18 +6,23 @@
     <br>
     <form 
       class="form" 
-      [formGroup]="registerForm"
-      (ngSubmit)="register()">
+      [formGroup]="registerForm">
       
       <!-- col 1 -->
       <div class="row">
         <div class="w-50">
           <label for="id">ID</label>
-          <input type="text" id="id" formControlName="id">
+          <input type="text" id="id" formControlName="id" maxlength="10">
+          <span *ngIf="isValidField('id')" class="error-label">
+            {{ getFieldError('id') }}
+          </span>
         </div>
         <div class="w-50">
           <label for="name">Nombre</label>
           <input type="text" id="name" formControlName="name">
+          <span *ngIf="isValidField('name')" class="error-label">
+            {{ getFieldError('name') }}
+          </span>
         </div>
       </div>
 
@@ -26,10 +31,16 @@
         <div class="w-50">
           <label for="description">Descripción</label>
           <input type="text" id="description" formControlName="description">
+          <span *ngIf="isValidField('description')" class="error-label">
+            {{ getFieldError('description') }}
+          </span>
         </div>
         <div class="w-50">
           <label for="logo">Logo</label>
           <input type="text" id="logo" formControlName="logo">
+          <span *ngIf="isValidField('logo')" class="error-label">
+            {{ getFieldError('logo') }}
+          </span>
         </div>
       </div>
 
@@ -37,18 +48,33 @@
       <div class="row">
         <div class="w-50">
           <label for="date_release">Fecha liberación</label>
-          <input type="text" id="date_release" formControlName="date_release">
+          <!-- <input type="text" id="date_release" formControlName="dateRelease"> -->
+          <dp-date-picker 
+            [config]="config"  
+            formControlName="date_release" 
+            (onChange)="onChangeDate()"
+            theme="dp-material" 
+            class="date-picker"
+            style="width: 100% !important;"
+            ></dp-date-picker>
+            <span *ngIf="isValidField('date_release')" class="error-label">
+              {{ getFieldError('date_release') }}
+            </span>
         </div>
         <div class="w-50">
           <label for="date_revision">Fecha Revisión</label>
-          <input type="text" id="date_revision" formControlName="date_revision">
+          <input class="disabled" type="text" id="date_revision" formControlName="date_revision" readonly>
         </div>
       </div>
 
       <!-- Bottons -->
       <div class="button-container">
         <button class="btn-secundary" (click)="resetForm()">Reiniciar</button>
-        <button class="btn-primary" [disabled]="registerForm.invalid" type="submit">Enviar</button>
+        <button 
+          class="btn-primary" 
+          (click)="register()" 
+          [disabled]="registerForm.invalid" 
+          type="submit">Enviar</button>
       </div>
 
 
