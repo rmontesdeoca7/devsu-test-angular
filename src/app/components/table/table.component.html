@@ -1,0 +1,40 @@
+<div class="main">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Nombre del producto</th>
+        <th>Descripción 
+          <div class="tooltip">
+            <img src="assets/img/tooltip.svg" alt="tooltip">
+            <span class="tooltiptext">Descripción</span>
+          </div>
+        </th>
+        <th>Fecha de liberación 
+          <div class="tooltip">
+            <img src="assets/img/tooltip.svg" alt="tooltip">
+            <span class="tooltiptext">Fecha de liberación</span>
+          </div>
+        </th>
+        <th>Fecha de reestructuración 
+          <div class="tooltip">
+            <img src="assets/img/tooltip.svg" alt="tooltip">
+            <span class="tooltiptext">Fecha de reestructuración</span>
+          </div>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td><img height="20" [src]="product.logo" [alt]="product.name" /> </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.date_release  | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
+        <td>...</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

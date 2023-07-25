@@ -1,0 +1,27 @@
+.main {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+
+  thead {
+    background-color: #f9fafc;
+
+    th {
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+  tbody td {
+    padding: .5rem 0;
+  }
+
+  tr {
+    height: 45px;
+  }
+}
