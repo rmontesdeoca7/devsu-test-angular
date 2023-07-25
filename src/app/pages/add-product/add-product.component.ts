@@ -20,4 +20,10 @@ export class AddProductComponent {
   register(){
     
   }
+
+  resetForm() {
+    this.registerForm.reset();
+    this.registerForm.markAsPristine();
+    this.registerForm.markAsUntouched();
+  }
 }

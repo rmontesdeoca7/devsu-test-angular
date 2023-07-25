@@ -2,6 +2,11 @@
   background-color: #fff;
   border-radius: 8px;
   padding: 1rem;
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .table {

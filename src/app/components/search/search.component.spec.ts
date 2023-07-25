@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { TableComponent } from './table.component';
-import { ApiService } from '../../services/api.service';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+import { SearchComponent } from './search.component';
+import { ApiService } from '../../services/api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+describe('SearchComponent', () => {
+  let component: SearchComponent;
+  let fixture: ComponentFixture<SearchComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TableComponent],
+      declarations: [SearchComponent],
       imports: [
         HttpClientTestingModule
       ],
@@ -17,7 +18,7 @@ describe('TableComponent', () => {
         ApiService
       ]
     });
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
