@@ -9,8 +9,10 @@ import { Product } from 'src/app/interfaces/products-response.interface';
 })
 export class TableComponent implements OnInit {
   private apiService = inject( ApiService );
+  
   public products:Product[] = [];
   public productsAll:Product[] = [];
+  public open:boolean = false;
 
   ngOnInit(){
     this.getProducts();
@@ -43,5 +45,13 @@ export class TableComponent implements OnInit {
       error: (message) => console.error({ message })
     });
   }
+
+  // showOptions(id: string) {
+  //   const optionElement: HTMLElement | null = document.getElementById(id);
+  //   if (optionElement){
+  //     optionElement.style.display = 'block';
+  //     console.log(optionElement)
+  //   }
+  //}
 
 }

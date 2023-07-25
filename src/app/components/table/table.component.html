@@ -32,7 +32,20 @@
         <td>{{ product.description }}</td>
         <td>{{ product.date_release  | date: 'dd/MM/yyyy' }}</td>
         <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
-        <td><img class="dots" src="assets/img/dots.svg" alt="dots"></td>
+        <td >      
+          <div class="modal">
+            <img 
+              class="dots" 
+              src="assets/img/dots.svg" 
+              alt="dots" 
+            >
+            <div class="modaltext">
+              <a [routerLink]="['edit',product.id]">Editar</a>
+              <a >Eliminar</a>
+            </div>
+          </div>
+          
+        </td>
       </tr>
 
     </tbody>

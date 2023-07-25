@@ -3,14 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { formatDate } from '@angular/common';
 import { Product } from 'src/app/interfaces/products-response.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent {
-  private fb = inject( FormBuilder );
-  private apiService = inject( ApiService );
+  private fb          = inject( FormBuilder );
+  private apiService  = inject( ApiService );
+  private toastr      = inject( ToastrService );
+
   public today:Date = new Date();
   public config = {
     format: "YYYY-MM-DD",
@@ -46,10 +49,14 @@ export class AddProductComponent {
 
     const body:Product = this.registerForm.value;
     
-    //TODO: call service
     this.apiService.saveProduct(body)
-      .subscribe(resp => console.log(resp))
-
+      .subscribe({
+        next: () =>{ 
+          this.toastr.success('Guardado con éxito', 'Éxito');
+          this.resetForm();
+        },
+        error: () => this.toastr.error('Ocurrio un error al guardar', 'Error')
+      })
   }
 
   resetForm() {
@@ -89,7 +96,7 @@ export class AddProductComponent {
   }
 
   stringFormat(date: Date) {
-    let day:string | number = date.getDate(); 
+    let day:string | number = date.getDate() + 1; 
     day = day.toString().padStart(2, '0'); 
     let month:string | number = date.getMonth() + 1; 
     month = month.toString().padStart(2, '0'); 
