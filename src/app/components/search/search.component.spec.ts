@@ -7,6 +7,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
+  let compiled: HTMLElement;
+  let service: ApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,10 +22,24 @@ describe('SearchComponent', () => {
     });
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject( ApiService );
+
     fixture.detectChanges();
+    compiled = fixture.nativeElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should be match with the snapshop', () => {
+    expect(compiled.innerHTML).toMatchSnapshot();
+  });
+
+  it('should emit search value to the service', () => {
+    const value = 'txt';
+    const spy = jest.spyOn(service.dispachSearchTerm, 'emit');
+    component.search(value);
+    expect(spy).toHaveBeenCalledWith(value);
   });
 });

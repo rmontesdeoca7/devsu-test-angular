@@ -23,10 +23,6 @@ export class ApiService {
   getProducts (): Observable<Product[]> {
     const url = `${this.baseUrl}/bp/products`;
     return this.http.get<Product[]>(url, { headers: this.headers })
-      .pipe(
-        tap(),
-        catchError(err => throwError(() => err.error.message))
-      )
   }
 
   getProductId ( id:string ):Observable<Product[]> {
@@ -42,28 +38,17 @@ export class ApiService {
     const url = `${this.baseUrl}/bp/products/verification`;
     const params = new HttpParams()
       .set('id', id);
-
-    return this.http.get<boolean>(url, { params } )
-      .pipe(
-        tap(),
-        catchError(err => throwError(() => err.error.message))
-      )
+    return this.http.get<boolean>(url, { params } );
   }
 
   saveProduct( body:Product ) {
     const url = `${this.baseUrl}/bp/products`;    
-    return this.http.post(url, body, { headers: this.headers })
-      .pipe(
-        catchError(err => throwError(() => err.error.message))
-      )
+    return this.http.post(url, body, { headers: this.headers });
   }
 
   updateProduct( body:Product ) {
     const url = `${this.baseUrl}/bp/products`; 
-    return this.http.put(url, body, { headers: this.headers })
-    .pipe(
-      catchError(err => throwError(() => err.error.message))
-    )
+    return this.http.put(url, body, { headers: this.headers });
   }
 
   deleteProduct( id:string ) {
@@ -74,9 +59,6 @@ export class ApiService {
       params,
       headers: this.headers
     }
-    return this.http.delete( url, options )
-      .pipe(
-        catchError(err => throwError(() => err.status))
-      )
+    return this.http.delete( url, options );
   }
 }

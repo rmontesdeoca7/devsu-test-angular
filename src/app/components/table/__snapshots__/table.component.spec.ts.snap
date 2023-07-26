@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableComponent should be match with the snapshop 1`] = `
+"<div class="main"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><footer class="footer"><span class="result"> 0 Resultados </span><div class="selector"><select><option value="5">5</option><option value="10">10</option><option value="20">20</option></select></div></footer></div>"
+`;

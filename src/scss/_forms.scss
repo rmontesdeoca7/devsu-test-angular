@@ -19,6 +19,14 @@ input {
   border-radius: 4px;
   padding: 12px;
   color: $blue500;
+
+  &.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 input:-moz-read-only,
@@ -44,4 +52,8 @@ select {
   padding: 4px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+  &:focus {
+    outline: none;
+  }
 }

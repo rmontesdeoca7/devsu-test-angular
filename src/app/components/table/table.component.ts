@@ -65,7 +65,6 @@ export class TableComponent implements OnInit {
   }
 
   onChangeSelect( value:string) {
-    console.log({value})
     this.products = this.productsAll.slice(0,+value)
   }
 
