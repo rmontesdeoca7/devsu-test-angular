@@ -74,7 +74,7 @@ export class AddProductComponent {
   }
 
   getFieldError ( field: string): string | null {
-    return this.validatorsService.getFieldError(this.registerForm, field)
+    return this.validatorsService.getFieldError(this.registerForm, field);
   }
 
   onChangeDate() {

@@ -7,16 +7,18 @@ import { Product } from '../../interfaces/products-response.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
   templateUrl: './update-product.component.html',
   styleUrls: ['./update-product.component.scss']
 })
 export class UpdateProductComponent  implements OnInit{
-  private route       = inject( ActivatedRoute );
-  private apiService  = inject( ApiService );
-  private fb          = inject( FormBuilder );
-  private toastr      = inject( ToastrService );
+  private route             = inject( ActivatedRoute );
+  private apiService        = inject( ApiService );
+  private fb                = inject( FormBuilder );
+  private toastr            = inject( ToastrService );
+  private validatorsService  = inject( ValidatorsService )
 
   public product:Product = {
     id: '',
@@ -40,8 +42,8 @@ export class UpdateProductComponent  implements OnInit{
           name: this.product.name,
           description: this.product.description,
           logo: this.product.logo,
-          date_release: this.product.date_release,
-          date_revision: this.product.date_revision
+          date_release: formatDate(this.product.date_release, 'yyyy-MM-dd', 'en'),
+          date_revision: formatDate(this.product.date_revision, 'yyyy-MM-dd', 'en')
         })
       })
   }
@@ -74,32 +76,23 @@ export class UpdateProductComponent  implements OnInit{
   });
 
   resetForm() {
-    this.updateForm.reset();
-    this.updateForm.markAsPristine();
-    this.updateForm.markAsUntouched();
+    this.updateForm.reset({
+      id: this.product.id,
+      name: '',
+      description: '',
+      logo: '',
+      date_release: '',
+      date_revision: '',
+    });
+    
   }
 
   isValidField ( field: string ) {
-    return this.updateForm.controls[field].errors &&
-      this.updateForm.controls[field].touched
+    return this.validatorsService.isValidField(this.updateForm, field);
   }
 
   getFieldError ( field: string): string | null {
-    if ( !this.updateForm.controls[field] ) return null;
-    const errors = this.updateForm.controls[field].errors || {};
-
-    for(const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Este campo es requerido'
-        case 'minlength':
-          return `Mínimo ${ errors['minlength'].requiredLength} caracteres`
-        case 'maxlength':
-          return `Máximo ${ errors['maxlength'].requiredLength} caracteres`
-      }
-    }
-
-    return null
+    return this.validatorsService.getFieldError(this.updateForm, field);
   }
 
   onChangeDate() {
@@ -130,10 +123,7 @@ export class UpdateProductComponent  implements OnInit{
     
     this.apiService.updateProduct(body)
       .subscribe({
-        next: () =>{ 
-          this.toastr.success('Guardado con éxito', 'Éxito');
-          this.resetForm();
-        },
+        next:  () => this.toastr.success('Guardado con éxito', 'Éxito'),
         error: () => this.toastr.error('Ocurrio un error al guardar', 'Error')
       })
   }

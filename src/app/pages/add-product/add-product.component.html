@@ -48,7 +48,6 @@
       <div class="row">
         <div class="w-50">
           <label for="date_release">Fecha liberación</label>
-          <!-- <input type="text" id="date_release" formControlName="dateRelease"> -->
           <dp-date-picker 
             [config]="config"  
             formControlName="date_release" 
@@ -66,8 +65,6 @@
           <input class="disabled" type="text" id="date_revision" formControlName="date_revision" readonly>
         </div>
       </div>
-
-      {{ registerForm.controls['id'].errors | json }}
 
       <!-- Bottons -->
       <div class="button-container">

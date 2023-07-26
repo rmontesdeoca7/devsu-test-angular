@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ValidatorsService } from '../../services/validators.service';
 
 describe('UpdateProductComponent', () => {
   let component: UpdateProductComponent;
@@ -21,6 +22,7 @@ describe('UpdateProductComponent', () => {
       ],
       providers: [
         ApiService,
+        ValidatorsService,
         { provide: ToastrService, useValue: toastrService }
       ],
       schemas: [NO_ERRORS_SCHEMA]

@@ -1,5 +1,5 @@
 <div class="main">
-  <table class="table">
+  <table class="table" *ngIf="productsLength > 0">
     <thead>
       <tr>
         <th>Logo</th>
@@ -56,8 +56,10 @@
       {{ productsLength }} Resultados
     </span>
     <div class="selector">
-      <select >
+      <select (change)="onChangeSelect(select.value)" #select >
         <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
       </select>
     </div>
   </footer>

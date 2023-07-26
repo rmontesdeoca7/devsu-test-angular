@@ -2,7 +2,6 @@ import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
-
 import { Product } from '../interfaces/products-response.interface';
 
 @Injectable({

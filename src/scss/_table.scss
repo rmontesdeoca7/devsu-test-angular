@@ -1,0 +1,52 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: #f9fafc;
+
+    th {
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+
+  tbody td {
+    padding: .5rem 0;
+  }
+
+  tr {
+    height: 45px;
+    border-bottom: 2px solid #f7f7f7;
+  }
+}
+
+
+.modal {
+  position: relative;
+  display: inline-block;
+  bottom: -4px;
+  left: 4px;
+  width: 1rem;
+  height: 1rem;
+}
+
+
+.modal .modaltext {
+  visibility: hidden;
+  width: 60px;
+  background-color: white;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  right: 10px;
+  font-size: 14px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.modal:hover .modaltext {
+  visibility: visible;
+}

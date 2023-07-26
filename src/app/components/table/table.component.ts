@@ -22,7 +22,7 @@ export class TableComponent implements OnInit {
   }
 
   get productsLength () {
-    return this.products.length;
+    return this.productsAll.length;
   }
 
   getSearchTerm() {
@@ -42,7 +42,7 @@ export class TableComponent implements OnInit {
     .subscribe({
       next: (products) => {
         this.productsAll = products;
-        this.products = products;
+        this.products = this.productsAll.slice(0,5);
       },
       error: (message) => console.error({ message })
     });
@@ -62,7 +62,11 @@ export class TableComponent implements OnInit {
           }
         })
     }
-    
+  }
+
+  onChangeSelect( value:string) {
+    console.log({value})
+    this.products = this.productsAll.slice(0,+value)
   }
 
 }
