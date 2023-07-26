@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Product } from 'src/app/interfaces/products-response.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,8 @@ import { Product } from 'src/app/interfaces/products-response.interface';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  private apiService = inject( ApiService );
+  private apiService  = inject( ApiService );
+  private toastr      = inject( ToastrService );
   
   public products:Product[] = [];
   public productsAll:Product[] = [];
@@ -46,12 +48,21 @@ export class TableComponent implements OnInit {
     });
   }
 
-  // showOptions(id: string) {
-  //   const optionElement: HTMLElement | null = document.getElementById(id);
-  //   if (optionElement){
-  //     optionElement.style.display = 'block';
-  //     console.log(optionElement)
-  //   }
-  //}
+  openDelete(id: string) {
+    const resp = confirm('Estas seguro de borrar?');
+    if( resp ) {
+      this.apiService.deleteProduct(id)
+        .subscribe({
+          error:  (err) => {
+            if(err == 200){
+              this.toastr.success('Se ha eliminado correctamente', 'Éxito')
+              this.getProducts();
+            } 
+            else this.toastr.error('Ocurrio un error al eliminar', 'Error')
+          }
+        })
+    }
+    
+  }
 
 }

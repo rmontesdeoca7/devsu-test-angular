@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { TableComponent } from './components/table/table.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { SearchComponent } from './components/search/search.component';
+import { UpdateProductComponent } from './pages/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SearchComponent } from './components/search/search.component';
     HomeComponent,
     TableComponent,
     AddProductComponent,
-    SearchComponent
+    SearchComponent,
+    UpdateProductComponent
   ],
   imports: [
     BrowserModule,

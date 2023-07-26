@@ -17,7 +17,7 @@ export class AddProductComponent {
   public today:Date = new Date();
   public config = {
     format: "YYYY-MM-DD",
-    min:  "2023-07-25",
+    min:  formatDate(this.today, 'yyyy-MM-dd', 'en'),
   };
 
   public registerForm: FormGroup = this.fb.group({

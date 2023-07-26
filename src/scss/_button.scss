@@ -55,3 +55,20 @@
 .dots {
   transform: rotate(90deg);
 }
+
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+  display: block;  
+  text-align: left;
+
+}
+
+a:link,
+a:visited,
+a:focus {
+  color: $blue500;
+}
+
+

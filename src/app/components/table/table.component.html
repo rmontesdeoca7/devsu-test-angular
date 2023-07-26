@@ -41,7 +41,7 @@
             >
             <div class="modaltext">
               <a [routerLink]="['edit',product.id]">Editar</a>
-              <a >Eliminar</a>
+              <a (click)="openDelete(product.id)">Eliminar</a>
             </div>
           </div>
           
