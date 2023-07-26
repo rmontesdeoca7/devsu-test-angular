@@ -59,6 +59,9 @@ export class ApiService {
       params,
       headers: this.headers
     }
-    return this.http.delete( url, options );
+    return this.http.delete( url, options )
+      .pipe(
+        catchError(err => throwError(() => err.status))
+      )
   }
 }

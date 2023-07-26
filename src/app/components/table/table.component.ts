@@ -43,25 +43,27 @@ export class TableComponent implements OnInit {
       next: (products) => {
         this.productsAll = products;
         this.products = this.productsAll.slice(0,5);
-      },
-      error: (message) => console.error({ message })
+      }
     });
   }
 
   openDelete(id: string) {
     const resp = confirm('Estas seguro de borrar?');
-    if( resp ) {
-      this.apiService.deleteProduct(id)
-        .subscribe({
-          error:  (err) => {
-            if(err == 200){
-              this.toastr.success('Se ha eliminado correctamente', 'Éxito')
-              this.getProducts();
-            } 
-            else this.toastr.error('Ocurrio un error al eliminar', 'Error')
-          }
-        })
-    }
+    if( !resp ) return
+    this.deleteService(id);
+  }
+
+  deleteService(id:string){
+    this.apiService.deleteProduct(id)
+    .subscribe({
+      error:  (err) => {
+        if(err == 200){
+          this.toastr.success('Se ha eliminado correctamente', 'Éxito')
+          this.getProducts();
+        } 
+        else this.toastr.error('Ocurrio un error al eliminar', 'Error')
+      }
+    })
   }
 
   onChangeSelect( value:string) {
