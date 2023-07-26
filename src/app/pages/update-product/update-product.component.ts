@@ -34,8 +34,7 @@ export class UpdateProductComponent  implements OnInit{
       )
       .subscribe( (product) => {
         this.product = product[0]; 
-        // console.log( this.product );
-        
+
         this.updateForm.reset({
           id: this.product.id,
           name: this.product.name,

@@ -67,6 +67,8 @@
         </div>
       </div>
 
+      {{ registerForm.controls['id'].errors | json }}
+
       <!-- Bottons -->
       <div class="button-container">
         <button class="btn-secundary" (click)="resetForm()">Reiniciar</button>

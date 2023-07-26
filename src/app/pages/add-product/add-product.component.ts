@@ -1,18 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { formatDate } from '@angular/common';
-import { Product } from 'src/app/interfaces/products-response.interface';
+import { Product } from '../../interfaces/products-response.interface';
 import { ToastrService } from 'ngx-toastr';
+import { ValidatorsService } from '../../services/validators.service';
+import { IdValidator } from '../../services/idValidator.service';
 
 @Component({
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent {
-  private fb          = inject( FormBuilder );
-  private apiService  = inject( ApiService );
-  private toastr      = inject( ToastrService );
+  private fb                  = inject( FormBuilder );
+  private apiService          = inject( ApiService );
+  private toastr              = inject( ToastrService );
+  private validatorsService   = inject( ValidatorsService)
 
   public today:Date = new Date();
   public config = {
@@ -24,7 +27,8 @@ export class AddProductComponent {
     id: ['', [
       Validators.required, 
       Validators.minLength(3), 
-      Validators.maxLength(10)]
+      Validators.maxLength(10)],
+      [new IdValidator()]
     ],
     name: ['', [
       Validators.required, 
@@ -66,26 +70,11 @@ export class AddProductComponent {
   }
 
   isValidField ( field: string ) {
-    return this.registerForm.controls[field].errors &&
-      this.registerForm.controls[field].touched
+    return this.validatorsService.isValidField(this.registerForm, field);
   }
 
   getFieldError ( field: string): string | null {
-    if ( !this.registerForm.controls[field] ) return null;
-    const errors = this.registerForm.controls[field].errors || {};
-
-    for(const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Este campo es requerido'
-        case 'minlength':
-          return `Mínimo ${ errors['minlength'].requiredLength} caracteres`
-        case 'maxlength':
-          return `Máximo ${ errors['maxlength'].requiredLength} caracteres`
-      }
-    }
-
-    return null
+    return this.validatorsService.getFieldError(this.registerForm, field)
   }
 
   onChangeDate() {
