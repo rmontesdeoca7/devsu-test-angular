@@ -113,7 +113,7 @@ export class UpdateProductComponent  implements OnInit{
     return newDate
   }
 
-  updateProduct(){
+  updateProductSer(){
     if( this.updateForm.invalid ) {
       this.updateForm.markAllAsTouched();
       return;
