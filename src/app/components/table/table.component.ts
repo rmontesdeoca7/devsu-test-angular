@@ -27,14 +27,16 @@ export class TableComponent implements OnInit {
 
   getSearchTerm() {
     this.apiService.dispachSearchTerm
-    .subscribe( term => {
-     this.products = this.productsAll
+    .subscribe( term => this.filterTermHandler(term))
+  }
+
+  filterTermHandler ( term: string ){
+    this.products = this.productsAll
       .filter( 
         product => 
           product.name.toLowerCase().includes(term) || 
           product.description.toLowerCase().includes(term)  
       )
-    })
   }
 
   getProducts() {

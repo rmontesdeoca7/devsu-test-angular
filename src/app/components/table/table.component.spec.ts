@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { TableComponent } from './table.component';
 import { ApiService } from '../../services/api.service';
-import { ToastrService } from 'ngx-toastr';
+import { ToastRef, ToastrModule, ToastrService } from 'ngx-toastr';
 import { Product } from '../../interfaces/products-response.interface';
-import { of } from 'rxjs';
-import { EventEmitter } from '@angular/core';
+import { Subject, of } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
 
 const mockProduct: Product[] = [{
   id: 'tj-q1',
@@ -16,10 +16,18 @@ const mockProduct: Product[] = [{
   date_revision: '2024-07-26'
 }];
 
+const toastPackageMock = {
+  toastId: '',
+  toastType: '',
+  message: '',
+  title: '',
+  toastRef: ToastRef<unknown>,
+};
+
 describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
-  let toastrService: ToastrService;
+  let toastr: ToastrService;
   let compiled: HTMLElement;
   let service: ApiService;
 
@@ -27,17 +35,17 @@ describe('TableComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TableComponent],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        ToastrModule.forRoot(),
       ],
       providers: [
         ApiService,
-        { provide: ToastrService, useValue: toastrService }
+        { provide: ToastrService, useValue: toastPackageMock  }
       ]
     });
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     service = TestBed.inject( ApiService );
-
     fixture.detectChanges();
     compiled = fixture.nativeElement;
   });
@@ -52,18 +60,26 @@ describe('TableComponent', () => {
 
   it('should call getProducts()', () => {
     const spy = jest.spyOn(service, 'getProducts').mockReturnValue(of(mockProduct));
+    jest.spyOn(component, 'filterTermHandler');
     component.getProducts();
     expect(spy).toHaveBeenCalled();
     expect(component.productsAll.length).toBeGreaterThan(0);
     expect(component.products.length).toBeGreaterThan(0);
   });
 
+  it('should filterTermHandler()', () => {
+    const term = 'Tarjetas';
+    component.productsAll = mockProduct;
+    component.filterTermHandler(term);
+    expect(component.products.length).toBeGreaterThanOrEqual(0);
+  });
+
   it('should call getSearchTerm()', () => {
     const term = 'txt'
-    const emitter = new EventEmitter();
-
+    const filter = jest.spyOn(component,'filterTermHandler')
     jest.spyOn(service.dispachSearchTerm, 'subscribe');
     component.productsAll = mockProduct;
+    component.getSearchTerm()
     expect(component.products.length).toBeGreaterThanOrEqual(0);
     expect(component.products).toBeTruthy();
   });
@@ -87,6 +103,16 @@ describe('TableComponent', () => {
     component.deleteService(id);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call deleteService() error', async () => {
+    const id = 'tj-q1';
+    const mockResponse = false;
+    jest.spyOn(service, 'deleteProduct').mockReturnValue(of(mockResponse));
+    const result = await component.deleteService(id);
+    expect(result).toBeUndefined();
+  });
+
+
 
   it('should call onChangeSelect()', () => {
     const value = "5";

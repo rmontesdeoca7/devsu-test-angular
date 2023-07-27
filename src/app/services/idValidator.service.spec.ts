@@ -3,6 +3,8 @@ import { IdValidator } from './idValidator.service';
 import { ApiService } from './api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { map, of } from 'rxjs';
+import { Component } from '@angular/core';
 
 describe('ApiService', () => {
   let service: IdValidator;
@@ -33,9 +35,27 @@ describe('ApiService', () => {
       name:['', Validators.minLength(3)]
     })
     service.validate(form)
-    const spy = jest.spyOn(apiService, 'getCheckId')
+    const spy = jest.spyOn(service, 'callGetCheckId')
 
     expect(spy).toBeCalledTimes(0);
+  });
+
+  it('should resp callGetCheckId()', async () => {
+    const id = 'jte-ed'
+    const mockResponse = true;
+    const spy = jest.spyOn(apiService, 'getCheckId').mockReturnValue(of(mockResponse))
+    const result = await service.callGetCheckId(id).toPromise();
+    expect(spy).toHaveBeenCalled();
+    expect(result).toBeTruthy();
+  });
+
+  it('should resp callGetCheckId() resp false', async () => {
+    const id = 'jte-ed'
+    const mockResponse = false;
+    const spy = jest.spyOn(apiService, 'getCheckId').mockReturnValue(of(mockResponse))
+    const result = await service.callGetCheckId(id).toPromise()
+    expect(spy).toHaveBeenCalled();
+    expect(result).toBeFalsy();
   });
 
 });

@@ -11,15 +11,16 @@ export class IdValidator implements AsyncValidator {
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     const id = control.value;
     
+    return this.callGetCheckId(id)
+  }
+
+  callGetCheckId(id:string) {
     return this.apiService.getCheckId(id)
       .pipe(
-        map(resp => {
-          return (
-            resp 
+        map(resp => resp 
             ? { idTaken: true} 
             : null
-          )
-        })
+        )
       )
   }
 }
