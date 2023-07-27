@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { environment } from '../../environments/environments';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Product } from '../interfaces/products-response.interface';
+import { of } from 'rxjs';
 
 const mockProduct = [
   {
@@ -65,6 +66,32 @@ describe('ApiService', () => {
 
     const req = httpMock.expectOne(url);
     req.flush(emsg, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should call getProductId()', () => {
+    const url = `${environment.baseUrl}/bp/products`;
+    const headers = new HttpHeaders()
+      .set( 'authorId', environment.authorId );
+
+      httpClient.get(url, { headers })
+      .subscribe( (data:any) => {
+        expect(data).toEqual(mockProduct)
+        // expect(data.length).toBe(1);
+      }
+      );
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockProduct);
+    httpMock.verify();
+  });
+  
+  it('should call getProductId() with ID', async() => {
+    const id = mockProduct[0].id;
+    jest.spyOn(service,'getProductId').mockReturnValue(of(mockProduct));
+    const resp = await service.getProductId(id).toPromise();
+    expect(resp).toBe(mockProduct);
+    expect(resp?.length).toBe(1);
+    
   });
 
   it('should call getCheckId()', () => {

@@ -106,9 +106,10 @@ describe('TableComponent', () => {
 
   it('should call deleteService() error', async () => {
     const id = 'tj-q1';
-    const mockResponse = false;
-    jest.spyOn(service, 'deleteProduct').mockReturnValue(of(mockResponse));
+    const mockResponse = '200';
+    jest.spyOn(service, 'deleteProduct').mockReturnValue(of(new Error(mockResponse)))
     const result = await component.deleteService(id);
+    console.log(result)
     expect(result).toBeUndefined();
   });
 
