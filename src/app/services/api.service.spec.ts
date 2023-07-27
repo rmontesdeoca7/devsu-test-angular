@@ -14,7 +14,7 @@ const mockProduct = [
     date_release: '2023-07-26',
     date_revision: '2024-07-26'
   }
-]
+];
 
 describe('ApiService', () => {
   let service: ApiService;

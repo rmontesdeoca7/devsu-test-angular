@@ -57,16 +57,10 @@ export class AddProductComponent {
       .subscribe({
         next: () =>{ 
           this.toastr.success('Guardado con éxito', 'Éxito');
-          this.resetForm();
+          this.registerForm.reset();
         },
         error: () => this.toastr.error('Ocurrio un error al guardar', 'Error')
       })
-  }
-
-  resetForm() {
-    this.registerForm.reset();
-    this.registerForm.markAsPristine();
-    this.registerForm.markAsUntouched();
   }
 
   isValidField ( field: string ) {
